@@ -3,14 +3,14 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from "next/navigation"
-//import { useWishlist } from '@/context/WishlistContext'
+import { useWishlist } from '@/context/WishlistContext'
 
 interface NavbarProps {
     onSearch?: (value: string) => void
 }
 
 export function Navbar({ onSearch }: NavbarProps) {
-    const [count] = useState();
+    const { count } = useWishlist();
     const [search, setSearch] = useState('');
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +19,7 @@ export function Navbar({ onSearch }: NavbarProps) {
     }
 
     return (
-        <nav className="sticky top-0 z-50 flex items-center justify-between px-8 h-16 bg-[#020408]/85 backdrop-blur-xl border-b border-cyan-500/10 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-cyan-400 after:to-transparent relative">
+        <nav className="relative top-0 z-50 flex items-center justify-between px-8 h-16 bg-[#020408]/85 backdrop-blur-xl border-b border-cyan-500/10 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-linear-to-r after:from-transparent after:via-cyan-400 after:to-transparent">
 
             <Link href="/" className="relative group">
                 <span className="font-orbitron font-black text-[23px] tracking-[3px] text-cyan-400">
@@ -73,12 +73,12 @@ function NavLink({ href, children }: { href: string; children: string }) {
     return (
         <Link
             href={href}
-            className={`relative font-mono text-[12px] tracking-[2px]
+            className={` relative font-mono text-[12px] tracking-[2px]
             px-4 py-2 border border-b-2 transition-all hover:text-cyan-400 
             hover:border-cyan-500/15 hover:bg-cyan-400/5 
             ${
                 isActive 
-                    ? "text-cyan-400  border-neon-cyan relative after:content-[''] after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:shadow-[0_0_8px_#00f5ff]"
+                    ? "link-menu text-cyan-400  border-neon-cyan relative"
                     : "text-slate-500 border-transparent"
             }`}
         >

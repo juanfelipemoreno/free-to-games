@@ -1121,6 +1121,17 @@ body::before {
   inset: 0;
   background: linear-gradient(to top, var(--bg-void) 0%, rgba(2,4,8,0.3) 50%, transparent 100%), linear-gradient(to right, var(--bg-void) 0%, transparent 40%);
 }
+
+.link-menu::after{
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
