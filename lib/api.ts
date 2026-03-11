@@ -54,12 +54,12 @@ export async function getSortedGames(sort: string) {
 export async function getGameById(id: number) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    
+    console.log("url id " + id);
     const res = await fetch(
         `${baseUrl}/api/game?id=${id}`
     );
-
-    if (!res.ok) throw new Error("Error al obtener el juego");
+    
+    if (!res.ok) throw new Error("Error al obtener el juegooo");
 
     return res.json();
 }

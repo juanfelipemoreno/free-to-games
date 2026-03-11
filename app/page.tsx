@@ -1,3 +1,5 @@
+
+import { Navbar } from "@/components/navbar/navbar";
 import { getGames } from "@/lib/api";
 import { Game } from "@/types/game";
 
@@ -5,9 +7,9 @@ export default async function Home() {
   const games: Game[] = await getGames();
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white p-10">
-      <h1 className="text-4xl font-bold mb-8">Game Finder 🎮</h1>
-
+   
+    <main>
+      <Navbar/>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {games.slice(0, 12).map((game) => (
           <div
