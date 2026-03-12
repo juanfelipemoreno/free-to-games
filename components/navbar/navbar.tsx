@@ -34,8 +34,6 @@ export function Navbar({ onSearch }: NavbarProps) {
             </Link>
 
             <div className="flex items-center gap-1">
-                <NavLink href="/" >INICIO</NavLink>
-                <NavLink href="/wishlist">DESEOS</NavLink>
             </div>
 
             <div className="flex items-center gap-3">

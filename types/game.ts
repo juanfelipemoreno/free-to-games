@@ -32,4 +32,5 @@ export interface GameDetail extends Game {
   screenshots: Screenshot[]
   minimum_system_requirements?: MinimumSystemRequirements
   tags?: string[]
+  error?: string
 }

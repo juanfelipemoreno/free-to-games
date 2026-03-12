@@ -14,9 +14,12 @@ export async function GET(request: Request) {
         }
 
         const url = "https://www.freetogame.com/api/game?id=" + id;
-
-        const response = await fetch(url,{
-            next : { revalidate : 60}
+        console.log("Paso a la api " + url)
+        const response = await fetch(url, {
+            cache: "no-store",
+            headers: {
+                "User-Agent": "NextJS"
+            }
         });
 
         if(!response.ok){
@@ -27,9 +30,11 @@ export async function GET(request: Request) {
 
         return NextResponse.json(data);
         
-    }catch(error){
+    }catch(error:any){
+        console.error("ERROR FETCH:", error);
+
         return NextResponse.json(
-            { error : "Error al obtener los juegos" + error},
+            { error : "Error al obtener los juegos", detail: error?.message },
             { status: 500}
         )
     }

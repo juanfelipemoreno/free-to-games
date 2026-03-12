@@ -52,14 +52,22 @@ export async function getSortedGames(sort: string) {
 }
 
 export async function getGameById(id: number) {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    console.log("url id " + id);
-    const res = await fetch(
-        `${baseUrl}/api/game?id=${id}`
-    );
-    
-    if (!res.ok) throw new Error("Error al obtener el juegooo");
+        const res = await fetch(
+            `${baseUrl}/api/game?id=${id}`
+        );
 
-    return res.json();
+        const data = await res.json();
+        console.log(data);
+        return data;
+    } catch (err) {
+        console.log("Error");
+        console.error(err);
+        return {
+            error: "Error al obtener los juegos",
+            details: err
+        };
+    }
 }
