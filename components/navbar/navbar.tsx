@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useWishlist } from '@/context/WishlistContext'
+import { useAuth } from '@/context/AuthContext'
 
 interface NavbarProps {
     onSearch?: (value: string) => void
@@ -11,11 +12,18 @@ interface NavbarProps {
 
 export function Navbar({ onSearch }: NavbarProps) {
     const { count } = useWishlist();
+    const { user, logout } = useAuth();
+    const router = useRouter();
     const [search, setSearch] = useState('');
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
         onSearch?.(e.target.value)
+    }
+
+    const handleLogout = () => {
+        logout()
+        router.push('/login')
     }
 
     return (
@@ -57,6 +65,21 @@ export function Navbar({ onSearch }: NavbarProps) {
                         {count}
                     </span>
                 </Link>
+
+                {user && (
+                    <div className="flex items-center gap-2 pl-3 border-l border-cyan-500/15">
+                        <div className="text-right">
+                            <p className="text-cyan-400 font-['Share_Tech_Mono'] text-xs tracking-wide">{user.name}</p>
+                            <p className="text-slate-500 font-['Share_Tech_Mono'] text-[10px]">{user.email}</p>
+                        </div>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-pink-500/10 border border-pink-500/30 text-pink-400 px-3 py-1 font-['Share_Tech_Mono'] text-xs tracking-widest transition-all hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(255,0,110,0.3)] [clip-path:polygon(4px_0,100%_0,100%_calc(100%-4px),calc(100%-4px)_100%,0_100%,0_4px)]"
+                        >
+                            SALIR
+                        </button>
+                    </div>
+                )}
             </div>
         </nav>
     )
