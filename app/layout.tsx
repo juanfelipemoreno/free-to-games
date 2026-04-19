@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { WishlistProvider } from "@/context/WishlistContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "GAME FREE",
@@ -23,10 +24,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body >
+      <body>
+        <AuthProvider>
           <WishlistProvider>
-          {children}
-        </WishlistProvider>
+            {children}
+          </WishlistProvider>
+        </AuthProvider>
       </body>
     </html>
   );

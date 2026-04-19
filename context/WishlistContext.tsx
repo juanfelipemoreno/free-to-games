@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { useAuth } from './AuthContext'
 
 interface WishlistContextValue {
     wishlist: number[]
@@ -13,16 +14,37 @@ const WishlistContext = createContext<WishlistContextValue | null>(null)
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
     const [wishlist, setWishlist] = useState<number[]>([])
+    const { user, isAuthenticated } = useAuth()
 
+    // Cargar wishlist cuando usuario cambia
     useEffect(() => {
-        const stored = localStorage.getItem('nexus_wishlist')
-        if (stored) setWishlist(JSON.parse(stored))
-    }, [])
+        if (isAuthenticated && user?.id) {
+            // Usar el ID del usuario como clave
+            const wishlistKey = `nexus_wishlist_${user.id}`
+            const stored = localStorage.getItem(wishlistKey)
+            if (stored) {
+                try {
+                    setWishlist(JSON.parse(stored))
+                } catch {
+                    setWishlist([])
+                }
+            } else {
+                setWishlist([])
+            }
+        } else {
+            // Limpiar wishlist si no hay usuario autenticado
+            setWishlist([])
+        }
+    }, [isAuthenticated, user?.id])
 
     const toggle = (id: number) => {
+        if (!user?.id) return
+
         setWishlist((prev) => {
             const next = prev.includes(id) ? prev.filter((w) => w !== id) : [...prev, id]
-            localStorage.setItem('nexus_wishlist', JSON.stringify(next))
+            // Guardar con la clave del usuario
+            const wishlistKey = `nexus_wishlist_${user.id}`
+            localStorage.setItem(wishlistKey, JSON.stringify(next))
             return next
         })
     }
