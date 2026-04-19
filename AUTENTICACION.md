@@ -18,7 +18,7 @@ Se ha implementado un sistema completo de autenticación con las siguientes cara
 - Restauración automática de sesión al recargar la página
 
 #### 3. **Protección de Rutas**
-- Middleware Next.js que protege automáticamente:
+- Proxy Next.js que protege automáticamente:
   - `/catalogo` - Catálogo de juegos (requiere autenticación)
   - `/wishlist` - Lista de deseos (requiere autenticación)
   - `/game/[id]` - Detalles de un juego (requiere autenticación)
