@@ -1,6 +1,16 @@
+function getBaseUrl() {
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return 'http://localhost:3000'
+}
+
 export async function getGames() {
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = getBaseUrl();
 
     const url = `${baseUrl}/api/games`;
 
@@ -14,7 +24,7 @@ export async function getGames() {
 }
 
 export async function getGamesByCategory(category: string) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = getBaseUrl();
 
     const url = `${baseUrl}/api/games?category=${category}`;
 
@@ -28,7 +38,7 @@ export async function getGamesByCategory(category: string) {
 }
 
 export async function getGamesByPlatform(platform: string) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = getBaseUrl();
 
     const res = await fetch(
         `${baseUrl}/api/games?platform=${platform}`
@@ -40,7 +50,7 @@ export async function getGamesByPlatform(platform: string) {
 }
 
 export async function getSortedGames(sort: string) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = getBaseUrl();
 
     const res = await fetch(
         `${baseUrl}/api/games?sort-by=${sort}`
@@ -53,7 +63,7 @@ export async function getSortedGames(sort: string) {
 
 export async function getGameById(id: number) {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const baseUrl = getBaseUrl();
 
         const res = await fetch(
             `${baseUrl}/api/game?id=${id}`
